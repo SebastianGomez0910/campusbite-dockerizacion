@@ -1,12 +1,14 @@
+import os
+
 import json
 import time
 import traceback
 from datetime import datetime
 from kafka import KafkaConsumer
 
-KAFKA_BROKER = "localhost:9092"
-TOPICO_PEDIDO_CREADO = "pedido-creado"
-GRUPO_CAJA = "grupo-caja"
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+TOPICO_PEDIDO_CREADO = os.getenv("TOPICO_PEDIDO_CREADO", "pedido-creado")
+GRUPO_CAJA = os.getenv("GRUPO_CAJA", "grupo-caja")
 
 
 def escuchar_pedidos():

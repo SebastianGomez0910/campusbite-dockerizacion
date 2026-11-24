@@ -1,3 +1,4 @@
+import os
 
 import json
 import time
@@ -11,9 +12,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-KAFKA_BROKER = "localhost:9092"
-TOPICO_PEDIDO_CREADO = "pedido-creado"
-GRUPO_ESTADISTICAS = "grupo-estadisticas"
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+TOPICO_PEDIDO_CREADO = os.getenv("TOPICO_PEDIDO_CREADO", "pedido-creado")
+GRUPO_ESTADISTICAS = os.getenv("GRUPO_ESTADISTICAS", "grupo-estadisticas")
+PUERTO = int (os.getenv("ESTADISTICAS_INTERNAL_PORT", 5002))
 
 # Datos acumulados en memoria
 estadisticas = {
@@ -126,4 +128,4 @@ if __name__ == "__main__":
     hilo.start()
 
     print("[ESTADISTICAS] Servicio iniciado en puerto 5002.")
-    app.run(host="0.0.0.0", port=5002, debug=False)
+    app.run(host="0.0.0.0", port=PUERTO, debug=False)

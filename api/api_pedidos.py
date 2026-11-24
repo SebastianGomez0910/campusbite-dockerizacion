@@ -1,3 +1,5 @@
+import os
+
 import json
 import uuid
 import threading
@@ -9,9 +11,10 @@ from kafka import KafkaProducer, KafkaConsumer
 app = Flask(__name__)
 CORS(app)
 
-KAFKA_BROKER = "localhost:9092"
-TOPICO_PEDIDO_CREADO = "pedido-creado"
-TOPICO_PEDIDO_LISTO = "pedido-listo"
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+TOPICO_PEDIDO_CREADO = os.getenv("TOPICO_PEDIDO_CREADO", "pedido-creado")
+TOPICO_PEDIDO_LISTO = os.getenv("TOPICO_PEDIDO_LISTO", "pedido-listo")
+PUERTO = int(os.getenv("API_INTERNAL_PORT", 5000))
 
 # Almacenamiento en memoria
 pedidos_db = {}
@@ -116,4 +119,4 @@ def consultar_pedido(pedido_id):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=PUERTO, debug=False)

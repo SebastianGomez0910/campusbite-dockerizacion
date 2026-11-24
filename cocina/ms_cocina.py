@@ -1,3 +1,5 @@
+import os
+
 import traceback
 import json
 import threading
@@ -12,13 +14,11 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuracion de Kafka
-KAFKA_BROKER = "localhost:9092"
-TOPICO_PEDIDO_CREADO = "pedido-creado"
-TOPICO_PEDIDO_LISTO = "pedido-listo"
-
-# Configuracion del microservicio
-PUERTO = 5001
-GRUPO_COCINA = "grupo-cocina"
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+TOPICO_PEDIDO_CREADO = os.getenv("TOPICO_PEDIDO_CREADO", "pedido-creado")
+TOPICO_PEDIDO_LISTO = os.getenv("TOPICO_PEDIDO_LISTO", "pedido-listo")
+PUERTO = int(os.getenv("COCINA_INTERNAL_PORT", 5001))
+GRUPO_COCINA = os.getenv("GRUPO_COCINA", "grupo-cocina")
 
 # Almacenamiento en memoria
 pedidos_cocina = {}

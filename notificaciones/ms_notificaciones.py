@@ -1,3 +1,4 @@
+import os
 
 import asyncio
 import json
@@ -8,12 +9,11 @@ import traceback
 from kafka import KafkaConsumer
 from websockets.asyncio.server import serve
 
-KAFKA_BROKER = "localhost:9092"
-TOPICO_PEDIDO_LISTO = "pedido-listo"
-GRUPO_NOTIFICACIONES = "grupo-notificaciones"
-
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")
+TOPICO_PEDIDO_LISTO = os.getenv("TOPICO_PEDIDO_LISTO", "pedido-listo")
+GRUPO_NOTIFICACIONES = os.getenv("GRUPO_NOTIFICACIONES", "grupo-notificaciones")
 HOST = "0.0.0.0"
-PUERTO_WEBSOCKET = 8765
+PUERTO_WEBSOCKET = int(os.getenv("WS_INTERNAL_PORT", 8765))
 
 # Relaciona cada cliente WebSocket con el pedido al que está suscrito.
 clientes = {}
